@@ -3,7 +3,12 @@ import { login } from "../../functions/general";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 
+//redux
+import { useDispatch } from "react-redux";
+
 export default function SignIn() {
+  const dispatch = useDispatch();
+
   const navigate = useNavigate();
   const [user, setUser] = React.useState({
     username: "",
@@ -21,12 +26,17 @@ export default function SignIn() {
           toast.error(res.data.message);
         } else {
           localStorage.setItem("access_token", res.data.token);
+          dispatch({ type: "LOGIN", user: {
+            token : res.data.token,
+            username : res.data.user.username,
+            role : res.data.user.role
+          } });
           navigate("/" + res.data.role, { replace: true });
         }
         console.log(res);
       })
       .catch((err) => {
-        toast.error(err.data.message);
+        toast.error(err.data);
       });
   };
 
@@ -84,7 +94,7 @@ export default function SignIn() {
                           </div>
                         </div>
                         <div className="d-flex justify-content-end">
-                          <a href="/">สมัครสมาชิก</a>
+                          <a href="/register">สมัครสมาชิก</a>
                         </div>
                         <div className="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
                           <button
