@@ -3,7 +3,8 @@ export function userReducer(state = null, action) {
     case "LOGIN":
       return action.user;
     case "LOGOUT":
-      return "Logout";
+      localStorage.clear();
+      return action.user;
     default:
       return null;
   }

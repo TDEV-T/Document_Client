@@ -26,12 +26,17 @@ export default function SignIn() {
           toast.error(res.data.message);
         } else {
           localStorage.setItem("access_token", res.data.token);
-          dispatch({ type: "LOGIN", user: {
-            token : res.data.token,
-            username : res.data.user.username,
-            role : res.data.user.role
-          } });
-          navigate("/" + res.data.role, { replace: true });
+          localStorage.setItem("user", res.data.user.id);
+          dispatch({
+            type: "LOGIN",
+            user: {
+              token: res.data.token,
+              id: res.data.user.id,
+              username: res.data.user.username,
+              role: res.data.user.role,
+            },
+          });
+          navigate("/" + res.data.user.role, { replace: true });
         }
         console.log(res);
       })

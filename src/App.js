@@ -1,7 +1,6 @@
-// import { Container, Row, Col, Button, FormGroup, Form,FormLabel } from "react-bootstrap";
-// import "bootstrap/dist/css/bootstrap.min.css";
 import { Route, Routes } from "react-router-dom";
-import React, { useState, useEffect } from "react";
+import React from "react";
+
 //Page
 import SignIn from "./components/General/Login";
 import SignUp from "./components/General/SignUp";
@@ -10,11 +9,14 @@ import Homepage_admin from "./components/Admin/Homepage_admin";
 
 //function
 import { currentUser } from "./functions/auth";
-
+//css
 import "./App.css";
-
+//Routes
+import UserRoute from "./routes/UserRoute";
 //redux
 import { useDispatch } from "react-redux";
+import AdminRoute from "./routes/AdminRoute";
+import Create_Document from "./components/User/Create_Document";
 
 //Layout
 // import Navbar from "./layouts/Navbar";
@@ -31,6 +33,7 @@ function App() {
           type: "LOGIN",
           user: {
             token: idtoken,
+            id: res.data[0].id_user,
             username: res.data[0].username_user,
             role: res.data[0].name_tu,
           },
@@ -47,8 +50,30 @@ function App() {
         <Route path="/" element={<SignIn />}></Route>
         <Route path="/register" element={<SignUp />}></Route>
 
-        <Route path="/user" element={Homepage_user} />
-        <Route path="/admin" element={Homepage_admin} />
+        <Route
+          path="/user"
+          element={
+            <UserRoute>
+              <Homepage_user />
+            </UserRoute>
+          }
+        />
+        <Route
+          path="/user/create"
+          element={
+            <UserRoute>
+              <Create_Document />
+            </UserRoute>
+          }
+        />
+        <Route
+          path="/admin"
+          element={
+            <AdminRoute>
+              <Homepage_admin />
+            </AdminRoute>
+          }
+        />
       </Routes>
     </div>
   );
