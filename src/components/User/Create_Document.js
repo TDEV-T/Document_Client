@@ -1,8 +1,13 @@
 import React, { useEffect, useState } from "react";
+import { create_document } from "../../functions/file";
+import { toast } from "react-toastify";
 import Navbar from "../layouts/Navbar";
 
 const Create_Document = () => {
   const userID = localStorage.getItem("user");
+  const [fileList, setFileList] = useState();
+  const files = fileList ? [...fileList] : [];
+
   const [value, setValue] = useState({
     header: "",
     start: "",
@@ -11,20 +16,41 @@ const Create_Document = () => {
     own: userID,
   });
 
-  const [file, setFile] = useState([]);
+  const authtoken = localStorage.access_token;
 
   const handleChange = (e) => {
     setValue({ ...value, [e.target.name]: e.target.value });
   };
 
   const handleChangeFile = (e) => {
-    setFile({ ...file, [e.target.name]: e.target.value });
+    setFileList(e.target.files);
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(value);
-    console.log(file);
+
+    const data = new FormData();
+
+    files.forEach((file, i) => {
+      data.append("files", file);
+    });
+
+    if (files.length > 6) {
+      toast.error("ใส่รูปภาพได้สูงสุด 6 รูป");
+      return;
+    }
+
+    data.append("content", value.content);
+    data.append("header", value.header);
+    data.append("start", value.start);
+    data.append("end", value.end);
+    data.append("own", value.own);
+    create_document(data, authtoken)
+      .then((res) => {
+        toast.success("เพิ่มสำเร็จ !");
+        document.getElementById("form_create_document").reset();
+      })
+      .catch((err) => console.log(err));
   };
 
   return (
@@ -35,7 +61,11 @@ const Create_Document = () => {
         <div className="row">
           <div className="col-3"></div>
           <div className="col-6">
-            <form encType="multipart/form-data" onSubmit={handleSubmit}>
+            <form
+              encType="multipart/form-data"
+              id="form_create_document"
+              onSubmit={handleSubmit}
+            >
               <div className="mb-3">
                 <label className="form-label">หัวข้อ</label>
                 <input
@@ -86,6 +116,7 @@ const Create_Document = () => {
                   name="file"
                   onChange={handleChangeFile}
                   multiple
+                  required
                 />
               </div>
 
