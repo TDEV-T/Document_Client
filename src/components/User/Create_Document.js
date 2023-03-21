@@ -10,6 +10,7 @@ const Create_Document = () => {
 
   const [value, setValue] = useState({
     header: "",
+    location: "",
     start: "",
     end: "",
     content: "",
@@ -44,9 +45,11 @@ const Create_Document = () => {
     data.append("header", value.header);
     data.append("start", value.start);
     data.append("end", value.end);
+    data.append("location", value.location);
     data.append("own", value.own);
     create_document(data, authtoken)
       .then((res) => {
+        console.log(value);
         toast.success("เพิ่มสำเร็จ !");
         document.getElementById("form_create_document").reset();
       })
@@ -56,7 +59,7 @@ const Create_Document = () => {
   return (
     <div>
       <Navbar />
-      <div className="container">
+      <div className="container mt-3">
         <h3>สร้างเอกสาร</h3>
         <div className="row">
           <div className="col-3"></div>
@@ -78,6 +81,16 @@ const Create_Document = () => {
               </div>
 
               <div className="mb-3">
+                <label className="form-label">สถานที่</label>
+                <input
+                  type="text"
+                  className="form-control"
+                  name="location"
+                  onChange={handleChange}
+                  required
+                />
+              </div>
+              <div className="mb-3">
                 <label className="form-label">วันที่เริ่มโครงการ</label>
                 <input
                   type="date"
@@ -98,6 +111,7 @@ const Create_Document = () => {
                   required
                 />
               </div>
+
               <div className="mb-3">
                 <label className="form-label">เนื้อหา</label>
                 <textarea

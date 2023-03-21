@@ -17,6 +17,7 @@ import UserRoute from "./routes/UserRoute";
 import { useDispatch } from "react-redux";
 import AdminRoute from "./routes/AdminRoute";
 import Create_Document from "./components/User/Create_Document";
+import PDFFile from "./components/layouts/PDFFile";
 
 //Layout
 // import Navbar from "./layouts/Navbar";
@@ -72,6 +73,14 @@ function App() {
             <AdminRoute>
               <Homepage_admin />
             </AdminRoute>
+          }
+        />
+        <Route
+          path="/pdf"
+          element={
+            <UserRoute>
+              <PDFFile />
+            </UserRoute>
           }
         />
       </Routes>

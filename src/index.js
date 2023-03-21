@@ -6,8 +6,8 @@ import { BrowserRouter } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 //Bootstrap
-import "mdb-react-ui-kit/dist/css/mdb.min.css";
-import "@fortawesome/fontawesome-free/css/all.min.css";
+import "bootstrap/dist/css/bootstrap.css";
+import "bootstrap/dist/js/bootstrap";
 
 //Redux
 import { Provider } from "react-redux";

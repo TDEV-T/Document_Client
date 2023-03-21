@@ -53,6 +53,7 @@ const Navbar = () => {
       onClick={onClick}
       selectedKeys={[current]}
       items={item}
+      theme="dark"
     ></Menu>
   );
 };
