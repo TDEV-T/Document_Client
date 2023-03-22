@@ -8,12 +8,40 @@ const Create_Document = () => {
   const [fileList, setFileList] = useState();
   const files = fileList ? [...fileList] : [];
 
+  const [part, setPart] = useState([
+    {
+      name: "",
+      count: "",
+    },
+  ]);
+
+  const handlePartChange = () => {
+    setPart([...part,{}])
+  }
+
+  const handlePartRemove = (index) => {
+   
+  }
+
   const [value, setValue] = useState({
-    header: "",
-    location: "",
     start: "",
-    end: "",
+    activity: 0,
+    project: 0,
+    another: 0,
+    dev: 0,
+    manage: 0,
+    plan: 0,
+    college: 0,
+    group: 0,
+    work: 0,
+    dept: 0,
+    date: 0,
+    location: "",
+    name: "",
+    startdate: "",
     content: "",
+    participant: Math.random(),
+    benefit: Math.random(),
     own: userID,
   });
 
@@ -30,30 +58,32 @@ const Create_Document = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    const data = new FormData();
+    console.log(value);
 
-    files.forEach((file, i) => {
-      data.append("files", file);
-    });
+    // const data = new FormData();
 
-    if (files.length > 6) {
-      toast.error("ใส่รูปภาพได้สูงสุด 6 รูป");
-      return;
-    }
+    // files.forEach((file, i) => {
+    //   data.append("files", file);
+    // });
 
-    data.append("content", value.content);
-    data.append("header", value.header);
-    data.append("start", value.start);
-    data.append("end", value.end);
-    data.append("location", value.location);
-    data.append("own", value.own);
-    create_document(data, authtoken)
-      .then((res) => {
-        console.log(value);
-        toast.success("เพิ่มสำเร็จ !");
-        document.getElementById("form_create_document").reset();
-      })
-      .catch((err) => console.log(err));
+    // if (files.length > 6) {
+    //   toast.error("ใส่รูปภาพได้สูงสุด 6 รูป");
+    //   return;
+    // }
+
+    // data.append("content", value.content);
+    // data.append("header", value.header);
+    // data.append("start", value.start);
+    // data.append("end", value.end);
+    // data.append("location", value.location);
+    // data.append("own", value.own);
+    // create_document(data, authtoken)
+    //   .then((res) => {
+    //     console.log(value);
+    //     toast.success("เพิ่มสำเร็จ !");
+    //     document.getElementById("form_create_document").reset();
+    //   })
+    //   .catch((err) => console.log(err));
   };
 
   return (
@@ -70,58 +100,202 @@ const Create_Document = () => {
               onSubmit={handleSubmit}
             >
               <div className="mb-3">
-                <label className="form-label">หัวข้อ</label>
+                <label className="form-label">ลักษณะงาน</label>
+                <div>
+                  <div className="form-check">
+                    <input
+                      className="form-check-input"
+                      type="checkbox"
+                      id="flexCheckDefault"
+                      name="activity"
+                      value="1"
+                      onChange={handleChange}
+                    />
+                    <label
+                      className="form-check-label"
+                      htmlFor="flexCheckDefault"
+                    >
+                      กิจกรรม
+                    </label>
+                  </div>
+                  <div className="form-check">
+                    <input
+                      className="form-check-input"
+                      type="checkbox"
+                      id="flexCheckChecked"
+                      name="project"
+                      value="1"
+                      onChange={handleChange}
+                    />
+                    <label
+                      className="form-check-label"
+                      htmlFor="flexCheckChecked"
+                    >
+                      โครงการ
+                    </label>
+                  </div>
+                  <div className="form-check">
+                    <input
+                      className="form-check-input"
+                      type="checkbox"
+                      id="flexCheckChecked"
+                      name="project"
+                      value="1"
+                      onChange={handleChange}
+                    />
+                    <label
+                      className="form-check-label"
+                      htmlFor="flexCheckChecked"
+                    >
+                      อื่นๆ ....
+                    </label>
+                  </div>
+                </div>
+              </div>
+
+              <div className="mb-3">
+                <label className="form-label">ฝ่าย</label>
+                <div>
+                  <div className="form-check">
+                    <input
+                      className="form-check-input"
+                      type="checkbox"
+                      id="flexCheckDefault"
+                      name="dev"
+                      value="1"
+                      onChange={handleChange}
+                    />
+                    <label
+                      className="form-check-label"
+                      htmlFor="flexCheckDefault"
+                    >
+                      พัฒนาฯ
+                    </label>
+                  </div>
+                  <div className="form-check">
+                    <input
+                      className="form-check-input"
+                      type="checkbox"
+                      id="flexCheckChecked"
+                      name="manage"
+                      value="1"
+                      onChange={handleChange}
+                    />
+                    <label
+                      className="form-check-label"
+                      htmlFor="flexCheckChecked"
+                    >
+                      บริหารทรัพฯ
+                    </label>
+                  </div>
+                  <div className="form-check">
+                    <input
+                      className="form-check-input"
+                      type="checkbox"
+                      id="flexCheckChecked"
+                      name="plan"
+                      value="1"
+                      onChange={handleChange}
+                    />
+                    <label
+                      className="form-check-label"
+                      htmlFor="flexCheckChecked"
+                    >
+                      วิชาการ
+                    </label>
+                  </div>
+                  <div className="form-check">
+                    <input
+                      className="form-check-input"
+                      type="checkbox"
+                      id="flexCheckChecked"
+                      name="college"
+                      value="1"
+                      onChange={handleChange}
+                    />
+                    <label
+                      className="form-check-label"
+                      htmlFor="flexCheckChecked"
+                    >
+                      แผนงาน
+                    </label>
+                  </div>
+                </div>
+              </div>
+
+              <div className="mb-3">
+                <label className="form-label">
+                  วันที่เข้าร่วมหรือดำเนินงาน
+                </label>
                 <input
-                  type="text"
+                  type="date"
                   className="form-control"
-                  name="header"
+                  name="startdate"
                   onChange={handleChange}
-                  required
                 />
               </div>
 
               <div className="mb-3">
-                <label className="form-label">สถานที่</label>
+                <label className="form-label">สถานที่จัดการเข้าร่วม</label>
                 <input
                   type="text"
                   className="form-control"
                   name="location"
                   onChange={handleChange}
-                  required
-                />
-              </div>
-              <div className="mb-3">
-                <label className="form-label">วันที่เริ่มโครงการ</label>
-                <input
-                  type="date"
-                  className="form-control"
-                  name="start"
-                  onChange={handleChange}
-                  required
                 />
               </div>
 
               <div className="mb-3">
-                <label className="form-label">วันที่จบโครงการ</label>
+                <label className="form-label">ชื่อโครงการ</label>
                 <input
-                  type="date"
+                  type="text"
                   className="form-control"
-                  name="end"
+                  name="name"
                   onChange={handleChange}
-                  required
                 />
               </div>
-
               <div className="mb-3">
-                <label className="form-label">เนื้อหา</label>
+                <label className="form-label">วัตถุประสงค์</label>
                 <textarea
-                  type="date"
                   className="form-control"
                   name="content"
                   onChange={handleChange}
-                  required
-                />
+                ></textarea>
               </div>
+              <div className="mb-3">
+                <label className="form-label">ผู้เข้าร่วม</label>
+                {part.map((singlePart, index) => (
+                  <div key={index}>
+                    <div className="row mb-2">
+                      <div className="col-6">
+                        <input
+                          type="text"
+                          className="form-control"
+                          placeholder="ชื่อ"
+                        />
+                      </div>
+                      <div className="col-4">
+                        <input
+                          type="text"
+                          className="form-control"
+                          placeholder="จำนวน"
+                        />
+                      </div>
+                      {part.length > 1 && (
+                        <div className="col-2">
+                          <button className="btn btn-danger">ลบ</button>
+                        </div>
+                      )}
+                    </div>
+                    {part.length - 1 === index && part.length < 3 && (
+                      <div>
+                        <button className="btn btn-primary">เพิ่ม</button>
+                      </div>
+                    )}
+                  </div>
+                ))}
+              </div>
+
               <div className="mb-3">
                 <label className="form-label">รูป</label>
                 <input
@@ -130,7 +304,6 @@ const Create_Document = () => {
                   name="file"
                   onChange={handleChangeFile}
                   multiple
-                  required
                 />
               </div>
 
