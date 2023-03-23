@@ -28,9 +28,9 @@ const Homepage_user = () => {
       <div className="container mt-3">
         <h3>รายงานทั้งหมดที่เพิ่ม</h3>
         <div className="row  row-cols-sm-2 row-cols-4">
-          {files.map((file, i) => (
+          {/* {files.map((file, i) => (
             <Card key={i} value={file} />
-          ))}
+          ))} */}
         </div>
       </div>
     </div>

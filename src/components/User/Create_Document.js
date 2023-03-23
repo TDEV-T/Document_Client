@@ -6,24 +6,11 @@ import Navbar from "../layouts/Navbar";
 const Create_Document = () => {
   const userID = localStorage.getItem("user");
   const [fileList, setFileList] = useState();
+
   const files = fileList ? [...fileList] : [];
 
-  const [part, setPart] = useState([
-    {
-      name: "",
-      count: "",
-    },
-  ]);
-
-  const handlePartChange = () => {
-    setPart([...part,{}])
-  }
-
-  const handlePartRemove = (index) => {
-   
-  }
-
   const [value, setValue] = useState({
+    id: Math.floor(Math.random() * 10000000000),
     start: "",
     activity: 0,
     project: 0,
@@ -40,10 +27,125 @@ const Create_Document = () => {
     name: "",
     startdate: "",
     content: "",
-    participant: Math.random(),
-    benefit: Math.random(),
+    result: "",
+    status_made: 0,
+    dept_made: "",
+    name_made: "",
+    parti: "",
+    commentState: "",
+    benefit: "",
     own: userID,
   });
+
+  const [comment, setComment] = useState([
+    {
+      name: "",
+    },
+  ]);
+
+  const [part, setPart] = useState([
+    {
+      name: "",
+      count: "",
+    },
+  ]);
+
+  const [benefit, setBenefit] = useState([
+    {
+      name: "",
+    },
+  ]);
+
+  const handleCommentChange = () => {
+    if (comment.length < 3) {
+      setComment([...comment, { name: "" }]);
+    } else {
+      toast.error("เพิ่มได้สูงสุด 3");
+    }
+  };
+
+  const handleRemoveComment = (index) => {
+    const list = [...comment];
+    list.splice(index, 1);
+    setComment(list);
+  };
+
+  const handleChangeComment = (e, index) => {
+    const { name, value } = e.target;
+    const list = [...comment];
+    list[index][name] = value;
+    setComment(list);
+    console.log(comment);
+  };
+
+  const handleBenefitChange = () => {
+    if (benefit.length < 3) {
+      setBenefit([...benefit, { name: "" }]);
+    } else {
+      toast.error("เพิ่มได้สูงสุด 3");
+    }
+  };
+
+  const handleRemoveBenefit = (index) => {
+    const list = [...benefit];
+    list.splice(index, 1);
+    setBenefit(list);
+  };
+
+  const handleChangeBenefit = (e, index) => {
+    const { name, value } = e.target;
+    const list = [...benefit];
+
+    list[index][name] = value;
+    setBenefit(list);
+    console.log(list);
+  };
+
+  const handleChangePart = (e, index) => {
+    const { name, value } = e.target;
+    const list = [...part];
+
+    list[index][name] = value;
+    setPart(list);
+    console.log(list);
+  };
+
+  const handlePartChange = () => {
+    if (part.length < 3) {
+      setPart([...part, { name: "", count: "" }]);
+    } else {
+      toast.error("เพิ่มได้สูงสุด 3");
+    }
+  };
+
+  const handlePartRemove = (index) => {
+    const list = [...part];
+    list.splice(index, 1);
+    setPart(list);
+  };
+
+  const handleSavePart = () => {
+    if (part) {
+      setValue({ ...value, ["parti"]: part });
+      toast.success("บันทึกสำเร็จ !");
+    } else {
+      toast.error("กรุณาเพิ่มผู้เข้าร่วมโครงการก่อน !");
+    }
+  };
+
+  const handleSaveBenefit = () => {
+    let BenefitAll = "";
+
+    for (let i = 0; i < benefit.length; i++) {
+      BenefitAll += benefit[i].name;
+
+      if (i != benefit.length - 1) {
+        BenefitAll += ",";
+      }
+    }
+
+    setValue({ ...value, ["benefit"]: BenefitAll });
+  };
 
   const authtoken = localStorage.access_token;
 
@@ -58,8 +160,20 @@ const Create_Document = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    console.log(value);
+    let commentAll = "";
 
+    let benefitAll = "";
+
+    for (let i = 0; i < comment.length; i++) {
+      commentAll += comment[i].name;
+
+      if (i !== comment.length - 1) {
+        commentAll += ",";
+      }
+    }
+
+    setValue({ ...value, ["commentState"]: commentAll });
+    console.log(value);
     // const data = new FormData();
 
     // files.forEach((file, i) => {
@@ -272,28 +386,183 @@ const Create_Document = () => {
                           type="text"
                           className="form-control"
                           placeholder="ชื่อ"
+                          name="name"
+                          value={singlePart.name}
+                          onChange={(e) => handleChangePart(e, index)}
                         />
                       </div>
                       <div className="col-4">
                         <input
-                          type="text"
+                          type="number"
+                          name="count"
                           className="form-control"
+                          value={singlePart.count}
                           placeholder="จำนวน"
+                          onChange={(e) => handleChangePart(e, index)}
                         />
                       </div>
                       {part.length > 1 && (
                         <div className="col-2">
-                          <button className="btn btn-danger">ลบ</button>
+                          <button
+                            className="btn btn-danger"
+                            onClick={() => handlePartRemove(index)}
+                          >
+                            ลบ
+                          </button>
                         </div>
                       )}
                     </div>
-                    {part.length - 1 === index && part.length < 3 && (
+                    <div>
+                      {part.length - 1 === index && (
+                        <div>
+                          <button
+                            onClick={handlePartChange}
+                            className="btn btn-primary"
+                          >
+                            เพิ่ม
+                          </button>
+                          <button
+                            onClick={handleSavePart}
+                            className="btn btn-success m-2"
+                          >
+                            บันทึก
+                          </button>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                ))}
+              </div>
+              <div className="mb-3">
+                <label className="form-label">ผลการดำเนินงาน</label>
+                <textarea
+                  className="form-control"
+                  name="result"
+                  onChange={handleChange}
+                ></textarea>
+              </div>
+
+              <div className="mb-3">
+                <label className="form-label">ประโยชน์ที่ได้รับ</label>
+                {benefit.map((singleBenefit, index) => (
+                  <div key={index}>
+                    <div className="row mb-2">
+                      <div className="col-6">
+                        <input
+                          type="text"
+                          className="form-control"
+                          placeholder="ชื่อ"
+                          name="name"
+                          value={singleBenefit.name}
+                          onChange={(e) => handleChangeBenefit(e, index)}
+                        />
+                      </div>
+                      {benefit.length > 1 && (
+                        <div className="col-2">
+                          <button
+                            className="btn btn-danger"
+                            onClick={() => handleRemoveBenefit(index)}
+                          >
+                            ลบ
+                          </button>
+                        </div>
+                      )}
+                    </div>
+                    {benefit.length - 1 === index && (
                       <div>
-                        <button className="btn btn-primary">เพิ่ม</button>
+                        <button
+                          onClick={handleBenefitChange}
+                          className="btn btn-primary"
+                        >
+                          เพิ่ม
+                        </button>
+                        <button
+                          onClick={handleSaveBenefit}
+                          className="btn btn-success m-2"
+                        >
+                          บันทึก
+                        </button>
                       </div>
                     )}
                   </div>
                 ))}
+              </div>
+
+              <div className="mb-3">
+                <label className="form-label">ข้อเสนอแนะ</label>
+                {comment.map((singleComment, index) => (
+                  <div key={index}>
+                    <div className="row mb-2">
+                      <div className="col-6">
+                        <input
+                          type="text"
+                          className="form-control"
+                          placeholder="ชื่อ"
+                          name="name"
+                          value={singleComment.name}
+                          onChange={(e) => handleChangeComment(e, index)}
+                        />
+                      </div>
+                      {comment.length > 1 && (
+                        <div className="col-2">
+                          <button
+                            className="btn btn-danger"
+                            onClick={() => handleRemoveComment(index)}
+                          >
+                            ลบ
+                          </button>
+                        </div>
+                      )}
+                    </div>
+                    {comment.length - 1 === index && comment.length < 3 && (
+                      <div>
+                        <button
+                          onClick={handleCommentChange}
+                          className="btn btn-primary"
+                        >
+                          เพิ่ม
+                        </button>
+                      </div>
+                    )}
+                  </div>
+                ))}
+              </div>
+
+              <div className="row mb-3">
+                <label className="form-label">ผู้จัดทำ</label>
+                <div className="col-md-4">
+                  <label for="inputState" className="form-label">
+                    ฝ่าย
+                  </label>
+                  <select
+                    id="inputState"
+                    name="status_made"
+                    className="form-select"
+                    onChange={handleChange}
+                  >
+                    <option value="0" selected>
+                      เลือก
+                    </option>
+                    <option value="1">หัวหน้างาน</option>
+                    <option value="2">ครูผู้สอน</option>
+                  </select>
+                </div>
+                <div className="col-md-4">
+                  <label className="form-label">ชื่อฝ่าย</label>
+                  <input
+                    className="form-control"
+                    name="dept_made"
+                    onChange={handleChange}
+                  />
+                </div>
+                <div className="col-md-4">
+                  <label className="form-label">ชื่อคนจัดทำ</label>
+                  <input
+                    className="form-control"
+                    name="name_made"
+                    onChange={handleChange}
+                  />
+                </div>
               </div>
 
               <div className="mb-3">
