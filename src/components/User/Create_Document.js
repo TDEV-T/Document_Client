@@ -32,7 +32,7 @@ const Create_Document = () => {
     dept_made: "",
     name_made: "",
     parti: "",
-    commentState: "",
+    comment: "",
     benefit: "",
     own: userID,
   });
@@ -147,6 +147,19 @@ const Create_Document = () => {
     setValue({ ...value, ["benefit"]: BenefitAll });
   };
 
+  const handleSaveComment = () => {
+    let commentAll = "";
+    for (let i = 0; i < comment.length; i++) {
+      commentAll += comment[i].name;
+
+      if (i != comment.length - 1) {
+        commentAll += ",";
+      }
+    }
+
+    setValue({ ...value, ["comment"]: commentAll });
+  };
+
   const authtoken = localStorage.access_token;
 
   const handleChange = (e) => {
@@ -160,19 +173,6 @@ const Create_Document = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    let commentAll = "";
-
-    let benefitAll = "";
-
-    for (let i = 0; i < comment.length; i++) {
-      commentAll += comment[i].name;
-
-      if (i !== comment.length - 1) {
-        commentAll += ",";
-      }
-    }
-
-    setValue({ ...value, ["commentState"]: commentAll });
     console.log(value);
     // const data = new FormData();
 
@@ -514,13 +514,19 @@ const Create_Document = () => {
                         </div>
                       )}
                     </div>
-                    {comment.length - 1 === index && comment.length < 3 && (
+                    {comment.length - 1 === index && (
                       <div>
                         <button
                           onClick={handleCommentChange}
                           className="btn btn-primary"
                         >
                           เพิ่ม
+                        </button>
+                        <button
+                          onClick={handleSaveComment}
+                          className="btn btn-success"
+                        >
+                          บันทึก
                         </button>
                       </div>
                     )}
