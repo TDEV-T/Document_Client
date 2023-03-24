@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { create_document } from "../../functions/file";
 import { toast } from "react-toastify";
 import Navbar from "../layouts/Navbar";
@@ -10,32 +10,39 @@ const Create_Document = () => {
   const files = fileList ? [...fileList] : [];
 
   const [value, setValue] = useState({
-    id: Math.floor(Math.random() * 10000000000),
+    partid: Math.floor(Math.random() * 10000000000),
     start: "",
-    activity: 0,
-    project: 0,
-    another: 0,
-    dev: 0,
-    manage: 0,
-    plan: 0,
-    college: 0,
-    group: 0,
-    work: 0,
-    dept: 0,
-    date: 0,
     location: "",
     name: "",
     startdate: "",
     content: "",
     result: "",
-    status_made: 0,
     dept_made: "",
     name_made: "",
     parti: "",
     comment: "",
     benefit: "",
+    status_made: "",
     own: userID,
   });
+
+  const [boxstatus, setBoxStatus] = useState({
+    activity: false,
+    project: false,
+    another: false,
+    dev: false,
+    manage: false,
+    plan: false,
+    college: false,
+    group: false,
+    work: false,
+    dept: false,
+    date: false,
+  });
+
+  const handleChangeCheckBox = (e) => {
+    setBoxStatus({ ...boxstatus, [e.target.name]: e.target.checked });
+  };
 
   const [comment, setComment] = useState([
     {
@@ -75,7 +82,6 @@ const Create_Document = () => {
     const list = [...comment];
     list[index][name] = value;
     setComment(list);
-    console.log(comment);
   };
 
   const handleBenefitChange = () => {
@@ -98,7 +104,6 @@ const Create_Document = () => {
 
     list[index][name] = value;
     setBenefit(list);
-    console.log(list);
   };
 
   const handleChangePart = (e, index) => {
@@ -107,7 +112,6 @@ const Create_Document = () => {
 
     list[index][name] = value;
     setPart(list);
-    console.log(list);
   };
 
   const handlePartChange = () => {
@@ -126,7 +130,7 @@ const Create_Document = () => {
 
   const handleSavePart = () => {
     if (part) {
-      setValue({ ...value, ["parti"]: part });
+      setValue({ ...value, parti: part });
       toast.success("บันทึกสำเร็จ !");
     } else {
       toast.error("กรุณาเพิ่มผู้เข้าร่วมโครงการก่อน !");
@@ -139,25 +143,24 @@ const Create_Document = () => {
     for (let i = 0; i < benefit.length; i++) {
       BenefitAll += benefit[i].name;
 
-      if (i != benefit.length - 1) {
+      if (i !== benefit.length - 1) {
         BenefitAll += ",";
       }
     }
 
-    setValue({ ...value, ["benefit"]: BenefitAll });
+    setValue({ ...value, benefit: BenefitAll });
   };
 
   const handleSaveComment = () => {
+    let list = [...comment];
     let commentAll = "";
-    for (let i = 0; i < comment.length; i++) {
-      commentAll += comment[i].name;
-
-      if (i != comment.length - 1) {
+    for (let i = 0; i < list.length; i++) {
+      commentAll += list[i].name;
+      if (i !== list.length - 1) {
         commentAll += ",";
       }
     }
-
-    setValue({ ...value, ["comment"]: commentAll });
+    setValue({ ...value, comment: commentAll });
   };
 
   const authtoken = localStorage.access_token;
@@ -173,31 +176,44 @@ const Create_Document = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    console.log(value);
-    // const data = new FormData();
+    const data = new FormData();
 
-    // files.forEach((file, i) => {
-    //   data.append("files", file);
-    // });
+    files.forEach((file, i) => {
+      data.append("files", file);
+    });
 
-    // if (files.length > 6) {
-    //   toast.error("ใส่รูปภาพได้สูงสุด 6 รูป");
-    //   return;
-    // }
+    if (files.length > 6) {
+      toast.error("ใส่รูปภาพได้สูงสุด 6 รูป");
+      return;
+    }
 
-    // data.append("content", value.content);
-    // data.append("header", value.header);
-    // data.append("start", value.start);
-    // data.append("end", value.end);
-    // data.append("location", value.location);
-    // data.append("own", value.own);
-    // create_document(data, authtoken)
-    //   .then((res) => {
-    //     console.log(value);
-    //     toast.success("เพิ่มสำเร็จ !");
-    //     document.getElementById("form_create_document").reset();
-    //   })
-    //   .catch((err) => console.log(err));
+    data.append("partid_re", value.partid);
+    data.append("start_re", value.startdate);
+    data.append("activity_re", boxstatus.activity);
+    data.append("project_re", boxstatus.project);
+    data.append("another_re", boxstatus.another);
+    data.append("dev_re", boxstatus.dev);
+    data.append("manage_re", boxstatus.manage);
+    data.append("plans_re", boxstatus.plan);
+    data.append("college_re", boxstatus.college);
+    data.append("group_re", boxstatus.group);
+    data.append("work_re", boxstatus.work);
+    data.append("dept_re", boxstatus.dept);
+    data.append("location_re", value.location);
+    data.append("name_re", value.name);
+    data.append("benefit_re", value.benefit);
+    data.append("comment_re", value.comment);
+    data.append("dept_ps", value.dept_made);
+    data.append("name_ps", value.name_made);
+    data.append("status_ps", value.status_made);
+    data.append("own_re", value.own);
+    data.append("part", part);
+    data.append("result_re", value.result);
+    create_document(data, authtoken)
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => console.log(err));
   };
 
   return (
@@ -222,8 +238,7 @@ const Create_Document = () => {
                       type="checkbox"
                       id="flexCheckDefault"
                       name="activity"
-                      value="1"
-                      onChange={handleChange}
+                      onChange={handleChangeCheckBox}
                     />
                     <label
                       className="form-check-label"
@@ -238,8 +253,7 @@ const Create_Document = () => {
                       type="checkbox"
                       id="flexCheckChecked"
                       name="project"
-                      value="1"
-                      onChange={handleChange}
+                      onChange={handleChangeCheckBox}
                     />
                     <label
                       className="form-check-label"
@@ -254,8 +268,7 @@ const Create_Document = () => {
                       type="checkbox"
                       id="flexCheckChecked"
                       name="project"
-                      value="1"
-                      onChange={handleChange}
+                      onChange={handleChangeCheckBox}
                     />
                     <label
                       className="form-check-label"
@@ -276,8 +289,7 @@ const Create_Document = () => {
                       type="checkbox"
                       id="flexCheckDefault"
                       name="dev"
-                      value="1"
-                      onChange={handleChange}
+                      onChange={handleChangeCheckBox}
                     />
                     <label
                       className="form-check-label"
@@ -292,8 +304,7 @@ const Create_Document = () => {
                       type="checkbox"
                       id="flexCheckChecked"
                       name="manage"
-                      value="1"
-                      onChange={handleChange}
+                      onChange={handleChangeCheckBox}
                     />
                     <label
                       className="form-check-label"
@@ -308,8 +319,7 @@ const Create_Document = () => {
                       type="checkbox"
                       id="flexCheckChecked"
                       name="plan"
-                      value="1"
-                      onChange={handleChange}
+                      onChange={handleChangeCheckBox}
                     />
                     <label
                       className="form-check-label"
@@ -324,14 +334,79 @@ const Create_Document = () => {
                       type="checkbox"
                       id="flexCheckChecked"
                       name="college"
-                      value="1"
-                      onChange={handleChange}
+                      onChange={handleChangeCheckBox}
                     />
                     <label
                       className="form-check-label"
                       htmlFor="flexCheckChecked"
                     >
                       แผนงาน
+                    </label>
+                  </div>
+                </div>
+              </div>
+
+              <div className="mb-3">
+                <label className="form-label">แผนระดับ</label>
+                <div>
+                  <div className="form-check">
+                    <input
+                      className="form-check-input"
+                      type="checkbox"
+                      id="flexCheckDefault"
+                      name="college"
+                      onChange={handleChangeCheckBox}
+                    />
+                    <label
+                      className="form-check-label"
+                      htmlFor="flexCheckDefault"
+                    >
+                      วิทยาลัย
+                    </label>
+                  </div>
+                  <div className="form-check">
+                    <input
+                      className="form-check-input"
+                      type="checkbox"
+                      id="flexCheckChecked"
+                      name="group"
+                      onChange={handleChangeCheckBox}
+                    />
+                    <label
+                      className="form-check-label"
+                      htmlFor="flexCheckChecked"
+                    >
+                      ฝ่าย
+                    </label>
+                  </div>
+                  <div className="form-check">
+                    <input
+                      className="form-check-input"
+                      type="checkbox"
+                      id="flexCheckChecked"
+                      name="work"
+                      onChange={handleChangeCheckBox}
+                    />
+                    <label
+                      className="form-check-label"
+                      htmlFor="flexCheckChecked"
+                    >
+                      งาน
+                    </label>
+                  </div>
+                  <div className="form-check">
+                    <input
+                      className="form-check-input"
+                      type="checkbox"
+                      id="flexCheckChecked"
+                      name="dept"
+                      onChange={handleChangeCheckBox}
+                    />
+                    <label
+                      className="form-check-label"
+                      htmlFor="flexCheckChecked"
+                    >
+                      แผนก
                     </label>
                   </div>
                 </div>
@@ -524,7 +599,7 @@ const Create_Document = () => {
                         </button>
                         <button
                           onClick={handleSaveComment}
-                          className="btn btn-success"
+                          className="btn btn-success m-2"
                         >
                           บันทึก
                         </button>
@@ -546,7 +621,7 @@ const Create_Document = () => {
                     className="form-select"
                     onChange={handleChange}
                   >
-                    <option value="0" selected>
+                    <option value="false" selected>
                       เลือก
                     </option>
                     <option value="1">หัวหน้างาน</option>
