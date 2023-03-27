@@ -207,7 +207,8 @@ const Create_Document = () => {
     data.append("name_ps", value.name_made);
     data.append("status_ps", value.status_made);
     data.append("own_re", value.own);
-    data.append("part", part);
+    let partJson = JSON.stringify(part);
+    data.append("part", partJson);
     data.append("result_re", value.result);
     create_document(data, authtoken)
       .then((res) => {
@@ -479,6 +480,7 @@ const Create_Document = () => {
                       {part.length > 1 && (
                         <div className="col-2">
                           <button
+                            type="button"
                             className="btn btn-danger"
                             onClick={() => handlePartRemove(index)}
                           >
@@ -491,12 +493,14 @@ const Create_Document = () => {
                       {part.length - 1 === index && (
                         <div>
                           <button
+                            type="button"
                             onClick={handlePartChange}
                             className="btn btn-primary"
                           >
                             เพิ่ม
                           </button>
                           <button
+                            type="button"
                             onClick={handleSavePart}
                             className="btn btn-success m-2"
                           >
@@ -535,6 +539,7 @@ const Create_Document = () => {
                       {benefit.length > 1 && (
                         <div className="col-2">
                           <button
+                            type="button"
                             className="btn btn-danger"
                             onClick={() => handleRemoveBenefit(index)}
                           >
@@ -546,12 +551,14 @@ const Create_Document = () => {
                     {benefit.length - 1 === index && (
                       <div>
                         <button
+                          type="button"
                           onClick={handleBenefitChange}
                           className="btn btn-primary"
                         >
                           เพิ่ม
                         </button>
                         <button
+                          type="button"
                           onClick={handleSaveBenefit}
                           className="btn btn-success m-2"
                         >
@@ -581,6 +588,7 @@ const Create_Document = () => {
                       {comment.length > 1 && (
                         <div className="col-2">
                           <button
+                            type="button"
                             className="btn btn-danger"
                             onClick={() => handleRemoveComment(index)}
                           >
@@ -592,12 +600,14 @@ const Create_Document = () => {
                     {comment.length - 1 === index && (
                       <div>
                         <button
+                          type="button"
                           onClick={handleCommentChange}
                           className="btn btn-primary"
                         >
                           เพิ่ม
                         </button>
                         <button
+                          type="button"
                           onClick={handleSaveComment}
                           className="btn btn-success m-2"
                         >
