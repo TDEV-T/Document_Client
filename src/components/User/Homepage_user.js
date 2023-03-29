@@ -5,7 +5,7 @@ import { get_document } from "../../functions/file";
 import Card from "../layouts/Card";
 
 const Homepage_user = () => {
-  const [files, setFiles] = useState([]);
+  const [reports, setReports] = useState([]);
   const userID = localStorage.getItem("user");
   const token = localStorage.getItem("access_token");
 
@@ -16,7 +16,7 @@ const Homepage_user = () => {
   const getDocument = () => {
     get_document(userID, token)
       .then((res) => {
-        setFiles(res.data);
+        setReports(res.data);
       })
       .catch((err) => console.log(err));
   };
@@ -24,14 +24,12 @@ const Homepage_user = () => {
   return (
     <div>
       <Navbar />
-
       <div className="container mt-3">
         <h3>รายงานทั้งหมดที่เพิ่ม</h3>
-        <div className="row ">
-          {/* {files.map((file, i) => (
-            <Card key={i} value={file} />
-          ))} */}
-          <Card />
+        <div className="row row-cols-2 row-cols-md-3">
+          {reports.map((rep, i) => (
+            <Card key={i} value={rep} />
+          ))}
         </div>
       </div>
     </div>

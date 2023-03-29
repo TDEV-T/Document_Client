@@ -10,7 +10,6 @@ const Create_Document = () => {
   const files = fileList ? [...fileList] : [];
 
   const [value, setValue] = useState({
-    partid: Math.floor(Math.random() * 10000000000),
     start: "",
     location: "",
     name: "",
@@ -33,6 +32,7 @@ const Create_Document = () => {
     dev: false,
     manage: false,
     plan: false,
+    tech: false,
     college: false,
     group: false,
     work: false,
@@ -186,8 +186,7 @@ const Create_Document = () => {
       toast.error("ใส่รูปภาพได้สูงสุด 6 รูป");
       return;
     }
-
-    data.append("partid_re", value.partid);
+    let partJson = JSON.stringify(part);
     data.append("start_re", value.startdate);
     data.append("activity_re", boxstatus.activity);
     data.append("project_re", boxstatus.project);
@@ -195,21 +194,22 @@ const Create_Document = () => {
     data.append("dev_re", boxstatus.dev);
     data.append("manage_re", boxstatus.manage);
     data.append("plans_re", boxstatus.plan);
+    data.append("technical_re", boxstatus.tech);
     data.append("college_re", boxstatus.college);
     data.append("group_re", boxstatus.group);
     data.append("work_re", boxstatus.work);
     data.append("dept_re", boxstatus.dept);
     data.append("location_re", value.location);
     data.append("name_re", value.name);
+    data.append("content_re", value.content);
     data.append("benefit_re", value.benefit);
     data.append("comment_re", value.comment);
-    data.append("dept_ps", value.dept_made);
-    data.append("name_ps", value.name_made);
-    data.append("status_ps", value.status_made);
     data.append("own_re", value.own);
-    let partJson = JSON.stringify(part);
     data.append("part", partJson);
     data.append("result_re", value.result);
+    data.append("statusmade_re", value.status_made);
+    data.append("namemade_re", value.name_made);
+    data.append("deptmade_re", value.dept_made);
     create_document(data, authtoken)
       .then((res) => {
         console.log(res);
@@ -319,7 +319,7 @@ const Create_Document = () => {
                       className="form-check-input"
                       type="checkbox"
                       id="flexCheckChecked"
-                      name="plan"
+                      name="tech"
                       onChange={handleChangeCheckBox}
                     />
                     <label
@@ -334,7 +334,7 @@ const Create_Document = () => {
                       className="form-check-input"
                       type="checkbox"
                       id="flexCheckChecked"
-                      name="college"
+                      name="plan"
                       onChange={handleChangeCheckBox}
                     />
                     <label
