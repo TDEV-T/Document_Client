@@ -75,14 +75,7 @@ function App() {
             </AdminRoute>
           }
         />
-        <Route
-          path="/pdf"
-          element={
-            <UserRoute>
-              <PDFFile />
-            </UserRoute>
-          }
-        />
+        <Route path="/pdf" element={<PDFFile />} />
       </Routes>
     </div>
   );

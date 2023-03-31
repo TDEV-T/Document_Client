@@ -42,7 +42,7 @@ const Card = ({ value }) => {
           open={open}
           style={{
             top: 20,
-            bottom:20,
+            bottom: 20,
           }}
           onOk={() => setOpen(false)}
           onCancel={() => setOpen(false)}
