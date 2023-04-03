@@ -36,6 +36,28 @@ const Card = ({ value }) => {
           รายละเอียด
         </button>
 
+        <PDFDownloadLink
+          document={
+            <PDFFile
+              value={part}
+              benefit={benefit}
+              comment={comment}
+              imgAll={imgAll}
+            />
+          }
+        >
+          {({ loading }) =>
+            loading ? (
+              <button type="button" className="btn btn-success mx-3">
+                Loading ....
+              </button>
+            ) : (
+              <button type="button" className="btn btn-success mx-3">
+                PDF Print
+              </button>
+            )
+          }
+        </PDFDownloadLink>
         <Modal
           title={value.name_re}
           centered
