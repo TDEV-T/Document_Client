@@ -11,6 +11,7 @@ import {
   StyleSheet,
   View,
   Line,
+  Svg,
 } from "@react-pdf/renderer";
 
 Font.register({ family: "sarabun", format: "truetype", src: Sarabun });
@@ -43,19 +44,34 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
+  svgCheckboxNone: {
+    width: 10,
+    height: 10,
+    marginRight: 5,
+    borderWidth: 1,
+  },
+  svgCheckboxCheck: {
+    width: 10,
+    height: 10,
+    marginRight: 5,
+    borderWidth: 1,
+    backgroundColor: "#000",
+  },
+  textCheckbox: {
+    flexGrow: 1,
+    fontSize: 10,
+  },
 });
 
-const PDFFile = ({ value }) => {
+const PDFFile = ({ value, benefit, comment, imgAll }) => {
+  console.log(value, benefit, comment, imgAll);
   return (
     <Document
       style={{
         fontFamily: "sarabun",
       }}
     >
-      <Page
-        size="A4"
-        style={{ margin: { top: 10, right: 15, bottom: 10, left: 15 } }}
-      >
+      <Page size="A4" style={{ marginTop: 10, marginLeft: 7, marginRight: 7 }}>
         <View style={styles.imageContainer}>
           <Image
             src="http://localhost:3456/api/image/logopntc.png"
@@ -73,9 +89,55 @@ const PDFFile = ({ value }) => {
         </View>
         <View style={{ flexDirection: "row" }}>
           <View style={{ flex: 1 }}>
-            <Text style={{ fontSize: 12, alignItems: "center" }}>
+            <Text style={{ fontSize: 12, textAlign: "center" }}>
               รายละเอียด
             </Text>
+
+            <Text style={{ fontSize: 12, textAlign: "center" }}>
+              วันที่ {value.date_re}
+            </Text>
+
+            {/* Checkbox */}
+            <View style={{ flexDirection: "row", alignItems: "center" }}>
+              <Text style={styles.textCheckbox}>ลักษณะงาน </Text>
+
+              {/* checkbox */}
+              <Svg
+                style={
+                  value.activity_re === "true"
+                    ? styles.svgCheckboxCheck
+                    : styles.svgCheckboxNone
+                }
+              ></Svg>
+              <Text style={styles.textCheckbox}>กิจกรรม</Text>
+              {/* checkbox */}
+
+              {/* checkbox */}
+
+              <Svg
+                style={
+                  value.project_re === "true"
+                    ? styles.svgCheckboxCheck
+                    : styles.svgCheckboxNone
+                }
+              ></Svg>
+              <Text style={styles.textCheckbox}>โครงการ</Text>
+              {/* checkbox */}
+
+              {/* checkbox */}
+
+              <Svg
+                style={
+                  value.another_re === "true"
+                    ? styles.svgCheckboxCheck
+                    : styles.svgCheckboxNone
+                }
+              ></Svg>
+              <Text style={styles.textCheckbox}>อื่นๆ..........</Text>
+              {/* checkbox */}
+            </View>
+
+            {/* Checkbox */}
           </View>
           <Line style={{ borderColor: "black", borderWidth: 1 }} />
           <View style={{ flex: 1 }}>
