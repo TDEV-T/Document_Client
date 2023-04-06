@@ -137,22 +137,8 @@ const PDFFile = ({ value, benefit, comment, imgAll }) => {
               {/* checkbox */}
             </View>
 
-            {/* Checkbox */}
-          </View>
-
-          <View style={{ flexDirection: "row" }}>
-          <View style={{ flex: 1 }}>
-            <Text style={{ fontSize: 12, textAlign: "center" }}>
-              รายละเอียด
-            </Text>
-
-            <Text style={{ fontSize: 12, textAlign: "center" }}>
-              วันที่ {value.date_re}
-            </Text>
-
-            {/* Checkbox */}
             <View style={{ flexDirection: "row", alignItems: "center" }}>
-              <Text style={styles.textCheckbox}>ลักษณะงาน </Text>
+              <Text style={styles.textCheckbox}>สังกัดฝ่าย </Text>
 
               {/* checkbox */}
               <Svg
@@ -192,6 +178,7 @@ const PDFFile = ({ value, benefit, comment, imgAll }) => {
 
             {/* Checkbox */}
           </View>
+
           <Line style={{ borderColor: "black", borderWidth: 1 }} />
           <View style={{ flex: 1 }}>
             <Text>Content for right column</Text>
