@@ -77,7 +77,54 @@ const PDFFile = ({ value }) => {
             <Text style={{ fontSize: 12, alignItems: "center" }}>
               รายละเอียด
             </Text>
+
+            <Text style={{ fontSize: 12, textAlign: "center" }}>
+              วันที่ {value.date_re}
+            </Text>
+
+            {/* Checkbox */}
+            <View style={{ flexDirection: "row", alignItems: "center" }}>
+              <Text style={styles.textCheckbox}>ลักษณะงาน </Text>
+
+              {/* checkbox */}
+              <Svg
+                style={
+                  value.activity_re === "true"
+                    ? styles.svgCheckboxCheck
+                    : styles.svgCheckboxNone
+                }
+              ></Svg>
+              <Text style={styles.textCheckbox}>กิจกรรม</Text>
+              {/* checkbox */}
+
+              {/* checkbox */}
+
+              <Svg
+                style={
+                  value.project_re === "true"
+                    ? styles.svgCheckboxCheck
+                    : styles.svgCheckboxNone
+                }
+              ></Svg>
+              <Text style={styles.textCheckbox}>โครงการ</Text>
+              {/* checkbox */}
+
+              {/* checkbox */}
+
+              <Svg
+                style={
+                  value.another_re === "true"
+                    ? styles.svgCheckboxCheck
+                    : styles.svgCheckboxNone
+                }
+              ></Svg>
+              <Text style={styles.textCheckbox}>อื่นๆ..........</Text>
+              {/* checkbox */}
+            </View>
+
+            {/* Checkbox */}
           </View>
+
           <Line style={{ borderColor: "black", borderWidth: 1 }} />
           <View style={{ flex: 1 }}>
             <Text>Content for right column</Text>
