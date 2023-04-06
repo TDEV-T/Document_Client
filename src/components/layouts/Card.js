@@ -41,7 +41,8 @@ const Card = ({ value }) => {
         <PDFDownloadLink
           document={
             <PDFFile
-              value={part}
+              value={value}
+              part={part}
               benefit={benefit}
               comment={comment}
               imgAll={imgAll}
