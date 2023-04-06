@@ -43,9 +43,19 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
+  header_1: {
+    fontSize: 12,
+    textAlign: "center",
+    textDecoration: "underline",
+  },
+  date_1: {
+    fontSize: 10,
+    textAlign: "right",
+  },
 });
 
-const PDFFile = ({ value }) => {
+const PDFFile = ({ part }) => {
+  console.log(part);
   return (
     <Document
       style={{
@@ -54,7 +64,7 @@ const PDFFile = ({ value }) => {
     >
       <Page
         size="A4"
-        style={{ margin: { top: 10, right: 15, bottom: 10, left: 15 } }}
+        style={{ margin: { top: 20, right: 15, bottom: 10, left: 15 } }}
       >
         <View style={styles.imageContainer}>
           <Image
@@ -73,9 +83,8 @@ const PDFFile = ({ value }) => {
         </View>
         <View style={{ flexDirection: "row" }}>
           <View style={{ flex: 1 }}>
-            <Text style={{ fontSize: 12, alignItems: "center" }}>
-              รายละเอียด
-            </Text>
+            <Text style={styles.header_1}>รายละเอียดผลงานที่ส่ง</Text>
+            <Text style={styles.date_1}>วันที่</Text>
           </View>
           <Line style={{ borderColor: "black", borderWidth: 1 }} />
           <View style={{ flex: 1 }}>

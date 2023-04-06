@@ -35,7 +35,9 @@ const Card = ({ value }) => {
         >
           รายละเอียด
         </button>
-
+        {
+          (part !== "")
+        }
         <PDFDownloadLink
           document={
             <PDFFile
