@@ -138,9 +138,10 @@ const PDFFile = ({ value, benefit, comment, imgAll }) => {
             </View>
 
             {/* Checkbox */}
+          </View>
 
-
-            <View style={{ flex: 1 }}>
+          <View style={{ flexDirection: "row" }}>
+          <View style={{ flex: 1 }}>
             <Text style={{ fontSize: 12, textAlign: "center" }}>
               รายละเอียด
             </Text>
@@ -188,6 +189,8 @@ const PDFFile = ({ value, benefit, comment, imgAll }) => {
               <Text style={styles.textCheckbox}>อื่นๆ..........</Text>
               {/* checkbox */}
             </View>
+
+            {/* Checkbox */}
           </View>
           <Line style={{ borderColor: "black", borderWidth: 1 }} />
           <View style={{ flex: 1 }}>
