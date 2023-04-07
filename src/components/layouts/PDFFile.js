@@ -113,6 +113,42 @@ const PDFFile = ({ value, part, benefit, comment, imgAll }) => {
     rows.push(row);
   }
 
+  const mades = [];
+
+  if (value.statusmade_re === 1) {
+    const made = (
+      <View style={{ margin: 10 }}>
+        <View style={{ flexDirection: "row", alignItems: "center" }}>
+          <Svg style={styles.svgCheckboxCheck}></Svg>
+          <Text style={styles.textCheckbox}>
+            หัวหน้างาน {"         " + value.deptmade_re}
+          </Text>
+        </View>
+        <View style={{ flexDirection: "row", alignItems: "center" }}>
+          <Svg style={styles.svgCheckboxNone}></Svg>
+          <Text style={styles.textCheckbox}>แผนก </Text>
+        </View>
+      </View>
+    );
+    mades.push(made);
+  } else {
+    const made = (
+      <View style={{ margin: 10 }}>
+        <View style={{ flexDirection: "row", alignItems: "center" }}>
+          <Svg style={styles.svgCheckboxNone}></Svg>
+          <Text style={styles.textCheckbox}>หัวหน้างาน </Text>
+        </View>
+        <View style={{ flexDirection: "row", alignItems: "center" }}>
+          <Svg style={styles.svgCheckboxCheck}></Svg>
+          <Text style={styles.textCheckbox}>
+            แผนก {"         " + value.deptmade_re}
+          </Text>
+        </View>
+      </View>
+    );
+    mades.push(made);
+  }
+
   let totalValue = 0;
   for (let i = 0; i < part.length; i++) {
     totalValue += part[i].value_pa;
@@ -368,20 +404,58 @@ const PDFFile = ({ value, part, benefit, comment, imgAll }) => {
                 fontSize: 12,
                 textAlign: "center",
                 textDecoration: "underline",
+                margin: 10,
               }}
             >
               รายละเอียดผู้จัดทำา
             </Text>
-            <Text style={{ fontSize: 11, textAlign: "left" }}>
+            <Text style={{ fontSize: 11, textAlign: "left", margin: 10 }}>
               {"(นาย/นาง/นางสาว)"}
               {value.namemade_re}
             </Text>
-            <Text style={styles.header_title_small}>
-              {value.statusmade_re === 1 ? "หัวหน้างาน" : "แผนก"}{" "}
-              {value.deptmade_re}
-            </Text>
+            {mades}
             <Line style={{ borderColor: "black", borderWidth: 1 }} />
             {rows}
+            <Line style={{ borderColor: "black", borderWidth: 1 }} />
+            <Text style={styles.header_title_small}>ผลการปฎิบัติงาน</Text>
+            <View
+              style={{
+                flexDirection: "row",
+                alignItems: "stretch",
+                margin: 10,
+              }}
+            >
+              {/* checkbox */}
+              <Svg style={styles.svgCheckboxNone}></Svg>
+              <Text style={styles.textCheckbox}>ดี</Text>
+
+              {/* checkbox */}
+
+              {/* checkbox */}
+
+              <Svg style={styles.svgCheckboxNone}></Svg>
+              <Text style={styles.textCheckbox}>พอใช้</Text>
+            </View>
+            <Text style={styles.header_title_small}>ข้อเสนอแนะ</Text>
+            <Text style={{ fontSize: 10, marginLeft: 15, marginTop: 10 }}>
+              ลงชื่อ
+            </Text>
+            <Text style={{ fontSize: 10, marginTop: 10, textAlign: "center" }}>
+              {"(นายมาโนช มีศรี)"}
+            </Text>
+            <Text style={{ fontSize: 10, textAlign: "center" }}>
+              รองผู้อำนวยการฝ่ายพัฒนากิจการนักเรียน นักศึกษาา
+            </Text>
+            <Line style={{ borderColor: "black", borderWidth: 1 }} />
+            <Text style={{ fontSize: 10, marginLeft: 15, marginTop: 10 }}>
+              ลงชื่อ
+            </Text>
+            <Text style={{ fontSize: 10, marginTop: 10, textAlign: "center" }}>
+              {"(นายสมศักดิ์ ไชยโสดา)"}
+            </Text>
+            <Text style={{ fontSize: 10, textAlign: "center" }}>
+              ผู้อำนวยการวิทยาลัยเทคนิคพังงา
+            </Text>
           </View>
         </View>
       </Page>
