@@ -212,7 +212,8 @@ const Create_Document = () => {
     data.append("deptmade_re", value.dept_made);
     create_document(data, authtoken)
       .then((res) => {
-        console.log(res);
+        toast.success("สร้างเอกสาร สำเร็จ !");
+        document.getElementById("form_create_document").reset();
       })
       .catch((err) => console.log(err));
   };

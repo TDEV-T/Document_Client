@@ -26,6 +26,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
     textAlign: "center",
     marginTop: 5,
+    marginBottom: 15,
   },
   body: {
     fontFamily: "Roboto",
@@ -49,6 +50,7 @@ const styles = StyleSheet.create({
     height: 10,
     marginRight: 5,
     borderWidth: 1,
+    marginBottom: 5,
   },
   svgCheckboxCheck: {
     width: 10,
@@ -56,10 +58,12 @@ const styles = StyleSheet.create({
     marginRight: 5,
     borderWidth: 1,
     backgroundColor: "#000",
+    marginBottom: 5,
   },
   textCheckbox: {
     flexGrow: 1,
     fontSize: 10,
+    marginBottom: 5,
   },
   page: {
     marginTop: 10,
@@ -69,17 +73,20 @@ const styles = StyleSheet.create({
   header_title_small: {
     fontSize: 10,
     textAlign: "left",
+    marginBottom: 5,
   },
   header_title_small_right: {
     fontSize: 10,
     textAlign: "right",
   },
   list_title_small: {
-    fontSize: 10,
+    fontSize: 9,
     marginRight: 10,
+    marginBottom: 3,
   },
   header_small: {
     fontSize: 11,
+    marginBottom: 8,
   },
 });
 
@@ -183,11 +190,14 @@ const PDFFile = ({ value, part, benefit, comment, imgAll }) => {
                 fontSize: 12,
                 textAlign: "center",
                 textDecoration: "underline",
+                marginBottom: 10,
               }}
             >
               รายละเอียด
             </Text>
-            <Text style={{ fontSize: 11, textAlign: "right" }}>
+            <Text
+              style={{ fontSize: 11, textAlign: "right", marginBottom: 10 }}
+            >
               วันที่ {formatDate(value.date_re)}
             </Text>
             {/* Checkbox */}

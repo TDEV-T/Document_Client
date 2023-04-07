@@ -129,6 +129,35 @@ const Card = ({ value }) => {
             />{" "}
             แผนงาน
           </label>
+          <p className="card-text">แผนระดับ</p>
+          <label className="checkbox-inline me-2">
+            <input
+              type="checkbox"
+              checked={value.college_re === "true" ? true : false}
+            />{" "}
+            วิทยาลัย
+          </label>
+          <label className="checkbox-inline me-2">
+            <input
+              type="checkbox"
+              checked={value.group_re === "true" ? true : false}
+            />{" "}
+            ฝ่าย
+          </label>
+          <label className="checkbox-inline me-2">
+            <input
+              type="checkbox"
+              checked={value.work_re === "true" ? true : false}
+            />{" "}
+            งาน
+          </label>
+          <label className="checkbox-inline me-2">
+            <input
+              type="checkbox"
+              checked={value.dept_re === "true" ? true : false}
+            />{" "}
+            แผนก
+          </label>
           <p className="card-text">
             สถานที่จัดการเข้าร่วม : {value.location_re}
           </p>
