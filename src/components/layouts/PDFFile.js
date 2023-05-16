@@ -379,7 +379,9 @@ const PDFFile = ({ value, part, benefit, comment, imgAll }) => {
                 รวมทั้งหมด จำนวน {totalValue} คน
               </Text>
             </View>
-            <Text style={styles.header_small}>ผลดำเนินงานน</Text>
+            <Text style={styles.header_small}>
+              สรุปผลการดำเนินงานโครงการ/กิจกรรม
+            </Text>
             <Text style={styles.list_title_small}>{value.result_re}</Text>
             <Text style={styles.header_small}>
               ประโยนช์ที่ได้รับจากการจัดทำโครงการ{value.name_re}
@@ -427,7 +429,17 @@ const PDFFile = ({ value, part, benefit, comment, imgAll }) => {
             <Line style={{ borderColor: "black", borderWidth: 1 }} />
             {rows}
             <Line style={{ borderColor: "black", borderWidth: 1 }} />
+            <Text style={{ marginTop: 5, textAlign: "center", fontSize: 10 }}>
+              ลงชื่อ.......................................ผู้รายงาน
+            </Text>
             <Text style={styles.header_title_small}>ผลการปฎิบัติงาน</Text>
+
+            <Text
+              style={{ marginBottom: 5, textAlign: "center", fontSize: 10 }}
+            >
+              {"(.............................................................................)"}
+            </Text>
+
             <View
               style={{
                 flexDirection: "row",
@@ -464,7 +476,7 @@ const PDFFile = ({ value, part, benefit, comment, imgAll }) => {
               {"(นายสมศักดิ์ ไชยโสดา)"}
             </Text>
             <Text style={{ fontSize: 10, textAlign: "center" }}>
-              ผู้อำนวยการวิทยาลัยเทคนิคพังงา
+              ผู้อำนวยการวิทยาลัยเทคนิคพังงาา
             </Text>
           </View>
         </View>
